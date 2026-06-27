@@ -8,7 +8,7 @@ No copy-pasting. No re-explaining your context. Open Gmail, DuckAI knows it's an
 
 [![CI](https://github.com/rsd-darshan/DuckAI/actions/workflows/ci.yml/badge.svg)](.github/workflows/ci.yml)
 [![Secret scan](https://github.com/rsd-darshan/DuckAI/actions/workflows/gitleaks.yml/badge.svg)](.github/workflows/gitleaks.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 </div>
 
