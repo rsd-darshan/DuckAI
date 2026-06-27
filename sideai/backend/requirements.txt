@@ -1,6 +1,6 @@
 fastapi>=0.109,<0.115
 uvicorn[standard]>=0.27,<0.32
-python-dotenv>=1.0,<2
+python-dotenv>=1.2.2,<2
 httpx>=0.26,<0.28
 pyautogui>=0.9.54
 Pillow>=10.0,<11
