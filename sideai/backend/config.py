@@ -10,6 +10,8 @@ class Settings:
     rag_top_k: int
     enable_browser_bridge: bool
     enable_vscode_bridge: bool
+    enable_macros: bool
+    enable_team_collab: bool
     slack_bot_token: str
     slack_default_channel: str
     github_token: str
@@ -40,6 +42,8 @@ def load_settings() -> Settings:
         rag_top_k=int(os.getenv("RAG_TOP_K", "4")),
         enable_browser_bridge=_to_bool(os.getenv("ENABLE_BROWSER_BRIDGE"), False),
         enable_vscode_bridge=_to_bool(os.getenv("ENABLE_VSCODE_BRIDGE"), False),
+        enable_macros=_to_bool(os.getenv("ENABLE_MACROS"), False),
+        enable_team_collab=_to_bool(os.getenv("ENABLE_TEAM_COLLAB"), False),
         slack_bot_token=os.getenv("SLACK_BOT_TOKEN", "").strip(),
         slack_default_channel=os.getenv("SLACK_DEFAULT_CHANNEL", "").strip(),
         github_token=os.getenv("GITHUB_TOKEN", "").strip(),

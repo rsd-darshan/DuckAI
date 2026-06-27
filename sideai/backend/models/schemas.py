@@ -123,3 +123,14 @@ class DailyNoteUpsertRequest(BaseModel):
     content: str
 
 
+class PluginCreateRequest(BaseModel):
+    name: str
+    version: str = "0.1.0"
+    manifest: dict[str, Any] = {}
+    permissions: list[str] = []
+
+
+class PluginEnabledRequest(BaseModel):
+    enabled: bool
+
+

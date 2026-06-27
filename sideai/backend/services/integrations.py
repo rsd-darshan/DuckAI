@@ -9,6 +9,8 @@ def feature_flags(settings: Settings) -> dict[str, bool]:
     return {
         "browser_bridge": settings.enable_browser_bridge,
         "vscode_bridge": settings.enable_vscode_bridge,
+        "macros": settings.enable_macros,
+        "team_collab": settings.enable_team_collab,
     }
 
 

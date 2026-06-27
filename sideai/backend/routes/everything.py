@@ -10,14 +10,17 @@ from database import (
     analytics_summary,
     create_focus_timer,
     create_notification,
+    create_plugin,
     daily_note_get,
     daily_note_upsert,
     finish_focus_timer,
     latest_focus_timer,
     list_notifications,
+    list_plugins,
     reminder_due_soon,
     reminder_mark_notified,
     reminder_list as db_reminder_list,
+    set_plugin_enabled,
     update_notification,
 )
 from models.schemas import (
@@ -29,6 +32,8 @@ from models.schemas import (
     GitHubPRReviewRequest,
     NotificationCreateRequest,
     NotificationUpdateRequest,
+    PluginCreateRequest,
+    PluginEnabledRequest,
     QuickToolRunRequest,
     SlackSendRequest,
 )
@@ -189,6 +194,22 @@ def create_everything_router(settings: Settings) -> APIRouter:
         item = update_notification(notification_id, req.read, req.dismissed)
         if not item:
             raise HTTPException(status_code=404, detail="Notification not found")
+        return item
+
+    # ── Plugins ────────────────────────────────────────────────────────────────
+    @router.get("/api/plugins")
+    def api_list_plugins():
+        return {"items": list_plugins()}
+
+    @router.post("/api/plugins")
+    def api_create_plugin(req: PluginCreateRequest):
+        return create_plugin(req.name, req.version, req.manifest, req.permissions)
+
+    @router.post("/api/plugins/{plugin_id}/enabled")
+    def api_set_plugin_enabled(plugin_id: str, req: PluginEnabledRequest):
+        item = set_plugin_enabled(plugin_id, req.enabled)
+        if not item:
+            raise HTTPException(status_code=404, detail="Plugin not found")
         return item
 
     # ── Focus timer ────────────────────────────────────────────────────────────
