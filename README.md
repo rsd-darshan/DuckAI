@@ -47,14 +47,14 @@ DuckAI is a desktop sidebar (Electron) that sits alongside whatever app you're u
 
 ## Two clients, one backend
 
-DuckAI isn't a single app bolted to a screenshot — it's a **backend-first architecture** with two independent front-ends consuming the same FastAPI service:
+DuckAI isn't a single app bolted to a screenshot — it's a **backend-first architecture** designed around two front-ends consuming the same FastAPI service:
 
-| Client | Context source | Best for |
+| Client | Context source | Status |
 |---|---|---|
-| **Electron sidebar** | Screen OCR (Tesseract) | Anything visible on screen — email, articles, videos, any app |
-| **VS Code extension** | Editor selection / file content (VS Code API) | Code — no OCR needed, reads the actual file text directly |
+| **Electron sidebar** | Screen OCR (Tesseract) | Working — the app described throughout this README |
+| **VS Code extension** | Editor selection / file content (VS Code API) | Work in progress — compiles cleanly but untested end-to-end, not yet packaged or run inside VS Code |
 
-Both talk to the same `http://127.0.0.1:8000` backend, the same AI provider cascade, and the same chat pipeline. The VS Code extension adds commands like **Ask About Selection**, **Explain Selection**, **Review This File**, and **Insert AI Suggestion at Cursor** — all answered by the identical backend that powers the sidebar.
+Both are designed to talk to the same `http://127.0.0.1:8000` backend and chat pipeline. The VS Code extension's commands (**Ask About Selection**, **Explain Selection**, **Review This File**, **Insert AI Suggestion at Cursor**) are implemented in TypeScript and type-check, but the extension hasn't been loaded into VS Code or verified working yet — see [`sideai/vscode-extension/`](sideai/vscode-extension) if you want to pick that up.
 
 ## Architecture
 
@@ -81,7 +81,7 @@ Both talk to the same `http://127.0.0.1:8000` backend, the same AI provider casc
 |---|---|
 | Shell | Electron 28 |
 | UI | React 18, TypeScript, Vite, Tailwind |
-| Second client | VS Code extension (TypeScript) |
+| Second client (WIP) | VS Code extension (TypeScript) — compiles, not yet verified running |
 | API | FastAPI, Uvicorn, SQLite |
 | Screen capture | Python (`pyautogui`) + Tesseract OCR; native macOS `CGWindowListCreateImage` for see-through capture |
 | AI (free tier) | Hugging Face → NVIDIA NIM → Groq (automatic cascade/fallback) |
@@ -99,7 +99,7 @@ Worth a look if you're reviewing the code:
 - **Dependency-free local RAG** ([`rag.py`](sideai/backend/services/rag.py)) — document retrieval scored by a hybrid of exact-match bonus, token overlap, TF-IDF, and fuzzy character similarity — no vector DB or embedding API, runs entirely offline
 - **Privacy-first capture** — screen text is redacted/blocked per user-configured app allowlists before it ever reaches the AI provider or disk
 - **Multi-provider AI cascade** with automatic failover across free-tier providers, with usage-tier gating (free / premium / ultra)
-- **One backend, two clients** — the Electron sidebar and VS Code extension are separate front-ends sharing a single FastAPI service and chat pipeline
+- **One backend, designed for multiple clients** — the Electron sidebar is the working front-end; the VS Code extension is a second client built against the same FastAPI service, still unverified (see [status](#two-clients-one-backend))
 
 ## Project structure
 
@@ -109,7 +109,7 @@ DuckAI/
 │   ├── frontend/          # React panel (Vite, TypeScript, Tailwind)
 │   ├── backend/           # FastAPI: OCR, AI cascade, RAG, SQLite, integrations
 │   ├── electron/          # Main process, tray, global hotkeys, capture ingest
-│   └── vscode-extension/  # Second client — editor-context AI commands in VS Code
+│   └── vscode-extension/  # WIP second client — compiles, not yet verified running
 ├── .github/workflows/     # CI: backend smoke tests, frontend build/test, gitleaks
 └── README.md
 ```
@@ -136,13 +136,15 @@ npm install
 npm start
 ```
 
-### VS Code extension (optional)
+### VS Code extension (work in progress)
+
+Compiles cleanly but hasn't been run inside VS Code yet — the manifest references icon assets (`media/icon.png`) that don't exist in the repo, so packaging with `vsce` currently fails. Treat this as a starting point, not a working feature:
 
 ```bash
 cd sideai/vscode-extension
 npm install
-npm run compile
-# then F5 in VS Code to launch an Extension Development Host, or `npm run package` to build a .vsix
+npm run compile   # succeeds — produces dist/*.js with no type errors
+# Add media/icon.png + media/icon-mono.svg before `vsce package` will succeed
 ```
 
 ## Permissions (macOS)
@@ -153,7 +155,7 @@ DuckAI needs OS-level permissions to read your screen and type into other apps:
 - **Accessibility** — required for "Write it" (typing AI output directly into another app's focused field)
 - **Tesseract** — `brew install tesseract` for OCR
 
-The VS Code extension needs none of this — it reads context directly through the VS Code API.
+The VS Code extension (work in progress) is designed to need none of this, since it reads context directly through the VS Code API rather than OCR.
 
 ## Security & privacy
 
