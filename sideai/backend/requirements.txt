@@ -10,5 +10,5 @@ reportlab>=4.0,<5
 qrcode[pil]>=7.4,<9
 PyJWT[crypto]>=2.8,<3
 cryptography>=41.0,<44
-youtube-transcript-api>=1.2
+youtube-transcript-api>=1.2.4
 # macOS only (for active app name): pip install pyobjc-framework-Quartz pyobjc-framework-AppKit
