@@ -1,0 +1,89 @@
+{
+  "appId": "com.sideai.sideai",
+  "productName": "SideAI",
+  "copyright": "Copyright © 2025 SideAI",
+  "directories": {
+    "app": "electron",
+    "buildResources": "assets",
+    "output": "dist-app"
+  },
+  "files": [
+    "main.js",
+    "preload.js",
+    "package.json",
+    "node_modules/**/*"
+  ],
+  "extraResources": [
+    {
+      "from": "frontend/dist",
+      "to": "frontend/dist",
+      "filter": ["**/*"]
+    },
+    {
+      "from": "backend-dist/sideai-backend",
+      "to": "backend/sideai-backend",
+      "filter": ["**/*"]
+    },
+    {
+      "from": "assets/tesseract",
+      "to": "tesseract",
+      "filter": ["**/*"]
+    }
+  ],
+  "mac": {
+    "category": "public.app-category.productivity",
+    "icon": "assets/icon.icns",
+    "target": [
+      { "target": "dmg", "arch": ["arm64", "x64"] },
+      { "target": "zip", "arch": ["arm64", "x64"] }
+    ],
+    "entitlements": "assets/entitlements.mac.plist",
+    "entitlementsInherit": "assets/entitlements.mac.plist",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "extendInfo": {
+      "NSScreenCaptureUsageDescription": "SideAI needs Screen Recording to understand what's on your screen and give you context-aware AI assistance.",
+      "NSAccessibilityUsageDescription": "SideAI needs Accessibility access to type text into other applications on your behalf."
+    }
+  },
+  "dmg": {
+    "title": "Install SideAI",
+    "icon": "assets/icon.icns",
+    "window": { "width": 540, "height": 380 },
+    "contents": [
+      { "x": 130, "y": 220 },
+      { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
+    ]
+  },
+  "win": {
+    "icon": "assets/icon.ico",
+    "target": [
+      { "target": "nsis", "arch": ["x64", "arm64"] },
+      { "target": "zip",  "arch": ["x64"] }
+    ],
+    "requestedExecutionLevel": "asInvoker"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "SideAI",
+    "installerIcon": "assets/icon.ico",
+    "uninstallerIcon": "assets/icon.ico",
+    "installerHeaderIcon": "assets/icon.ico",
+    "license": "assets/LICENSE.txt"
+  },
+  "linux": {
+    "icon": "assets/icon.png",
+    "target": ["AppImage", "deb"],
+    "category": "Utility"
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "sideai-app",
+    "repo": "sideai",
+    "releaseType": "release"
+  },
+  "afterSign": "scripts/notarize.js"
+}

@@ -1,0 +1,142 @@
+{
+  "name": "sideai",
+  "displayName": "SideAI",
+  "description": "Context-aware AI assistant for VS Code — powered by your local SideAI instance",
+  "version": "1.0.0",
+  "publisher": "sideai",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sideai-app/sideai"
+  },
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["AI", "Other"],
+  "keywords": ["ai", "assistant", "copilot", "code review", "sideai"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "sideai.askAboutSelection",
+        "title": "SideAI: Ask About Selection",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "sideai.reviewCode",
+        "title": "SideAI: Review This File",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "sideai.explainCode",
+        "title": "SideAI: Explain Selection",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "sideai.fixCode",
+        "title": "SideAI: Fix / Improve Selection",
+        "icon": "$(wrench)"
+      },
+      {
+        "command": "sideai.insertSuggestion",
+        "title": "SideAI: Insert AI Suggestion at Cursor",
+        "icon": "$(add)"
+      },
+      {
+        "command": "sideai.openPanel",
+        "title": "SideAI: Open Side Panel",
+        "icon": "$(layout-sidebar-right)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "sideai.askAboutSelection",
+          "group": "sideai@1"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "sideai.explainCode",
+          "group": "sideai@2"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "sideai.fixCode",
+          "group": "sideai@3"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "sideai.reviewCode",
+          "when": "editorIsOpen",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "sideai.askAboutSelection",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a",
+        "when": "editorHasSelection"
+      },
+      {
+        "command": "sideai.openPanel",
+        "key": "ctrl+shift+s",
+        "mac": "cmd+shift+s"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sideai-sidebar",
+          "title": "SideAI",
+          "icon": "media/icon-mono.svg"
+        }
+      ]
+    },
+    "views": {
+      "sideai-sidebar": [
+        {
+          "type": "webview",
+          "id": "sideai.panel",
+          "name": "SideAI",
+          "icon": "media/icon-mono.svg",
+          "contextualTitle": "SideAI"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SideAI",
+      "properties": {
+        "sideai.backendUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8000",
+          "description": "URL of the SideAI backend. Change only if you've moved it to a custom port."
+        },
+        "sideai.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Optional X-SideAI-Key if you've set SIDEAI_API_KEY on the backend."
+        },
+        "sideai.autoConnect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically connect to the SideAI backend when VS Code starts."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "build": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.24.0"
+  }
+}

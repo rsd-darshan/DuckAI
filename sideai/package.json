@@ -1,0 +1,22 @@
+{
+  "name": "sideai",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all": "npm run install:frontend && npm run install:electron && npm run install:backend",
+    "install:frontend": "cd frontend && npm install",
+    "install:electron": "cd electron && npm install",
+    "install:backend": "cd backend && python3 -m venv venv && ./venv/bin/pip install -r requirements.txt",
+    "build": "cd frontend && npm run build",
+    "start": "npm run build && cd electron && npm start",
+    "start:dev": "cd electron && npm run start:dev",
+    "backend": "cd backend && ./venv/bin/uvicorn main:app --reload --host 127.0.0.1 --port 8000",
+    "build:backend": "bash scripts/build-backend.sh",
+    "build:app": "bash scripts/build-app.sh",
+    "dist": "npm run build && npm run build:backend && electron-builder --mac --config electron-builder.json",
+    "dist:unsigned": "npm run build && electron-builder --mac --config electron-builder.json"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.13.3"
+  }
+}

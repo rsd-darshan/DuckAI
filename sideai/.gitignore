@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+electron/node_modules/
+
+# Env and secrets
+.env
+backend/.env
+backend/.sideai_onboarded
+frontend/.env.local
+*.local
+
+# Local data (chat history, personal screen context)
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+backend/venv/
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.so
+
+# Build
+frontend/dist/
+build/
+out/
+*.egg-info/
+backend/build/
+backend/dist/
+backend-dist/
+dist-app/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

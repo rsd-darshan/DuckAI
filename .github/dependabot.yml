@@ -1,0 +1,29 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "sideai/frontend"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      frontend-vite:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+      frontend-testing:
+        patterns:
+          - "vitest"
+          - "@testing-library/*"
+          - "jsdom"
+
+  - package-ecosystem: npm
+    directory: "sideai/electron"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+
+  - package-ecosystem: pip
+    directory: "sideai/backend"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
