@@ -6,8 +6,8 @@
 
 No copy-pasting. No re-explaining your context. Open Gmail, DuckAI knows it's an email. Watch a YouTube video, DuckAI can summarize it. It's the AI assistant that doesn't need to be told what you're looking at — it just sees it.
 
-[![CI](https://github.com/<your-username>/DuckAI/actions/workflows/ci.yml/badge.svg)](.github/workflows/ci.yml)
-[![Secret scan](https://github.com/<your-username>/DuckAI/actions/workflows/gitleaks.yml/badge.svg)](.github/workflows/gitleaks.yml)
+[![CI](https://github.com/rsd-darshan/DuckAI/actions/workflows/ci.yml/badge.svg)](.github/workflows/ci.yml)
+[![Secret scan](https://github.com/rsd-darshan/DuckAI/actions/workflows/gitleaks.yml/badge.svg)](.github/workflows/gitleaks.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 </div>
