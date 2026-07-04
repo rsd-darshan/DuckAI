@@ -7,7 +7,7 @@
     "start:dev": "electron . --dev"
   },
   "dependencies": {
-    "electron-updater": "^6.3.9"
+    "electron-updater": "^6.8.9"
   },
   "devDependencies": {
     "electron": "^42.2.0"
