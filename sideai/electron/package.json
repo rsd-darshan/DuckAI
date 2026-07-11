@@ -10,6 +10,6 @@
     "electron-updater": "^6.3.9"
   },
   "devDependencies": {
-    "electron": "^42.2.0"
+    "electron": "^43.1.0"
   }
 }
